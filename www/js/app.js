@@ -11,11 +11,18 @@ angular.module('App', ['ionic'])
         controller: 'SearchController',
         templateUrl: 'views/search/search.html'
       })
+      .state('settings', {
+        url: '/settings',
+        controller: 'SettingsController',
+        templateUrl: 'views/settings/settings.html'
+      })
+
     $urlRouterProvider.otherwise('/search');
   })
   .controller('LeftMenuController',function($scope,Locations){
     $scope.locations = Locations.data;
   })
+
   .factory('Settings', function () {
     var Settings = {
       units: 'us',
@@ -23,6 +30,7 @@ angular.module('App', ['ionic'])
     };
     return Settings;
   })
+  
   .factory('Locations', function () {
     var Locations = {
       data: [{

@@ -30,13 +30,13 @@ angular.module('App', ['ionic'])
 
   .factory('Settings', function () {
     var Settings = {
-      units: 'us',
+      units: 'si',
       days: 8
     };
     return Settings;
   })
 
-  .factory('Locations', function () {
+  .factory('Locations', function ($ionicPopup) {
     var Locations = {
       data: [{
         city: 'Chicago, IL, USA',
@@ -46,6 +46,8 @@ angular.module('App', ['ionic'])
 
       //確定地點在結果列表的索引
       getIndex: function (item) {
+        console.log(Locations.data);
+        console.log(item);
         var index = -1;
         Locations.data.forEach(function (location, i) {
           if (item.lat === location.lat && item.lng === location.lng) {
@@ -59,9 +61,22 @@ angular.module('App', ['ionic'])
       toggle: function (item) {
         var index = Locations.getIndex(item);
         if (index >= 0) {
-          Locations.data.splice(index, 1);
+
+          $ionicPopup.confirm({
+            title: 'Are you sure?',
+            template: 'This will remove ' + Locations.data[index].city
+          })
+            .then(function (res) {
+              if (res) {
+                Locations.data.splice(index, 1);
+              }
+            });
+
         } else {
           Locations.data.push(item);
+          $ionicPopup.alert({
+            title: 'Location saved'
+          })
         }
       },
 
@@ -88,16 +103,16 @@ angular.module('App', ['ionic'])
       return '';
     }
   })
-  .filter('chance', function(){
-    return function(chance){
-      if(chance){
-        var value = Math.round(chance/10);
+  .filter('chance', function () {
+    return function (chance) {
+      if (chance) {
+        var value = Math.round(chance / 10);
         return value * 10
       }
       return 0
     }
   })
-  .filter('icons',function(){
+  .filter('icons', function () {
     var map = {
       'clear-day': 'ion-ios-sunny',
       'clear-night': 'ion-ios-moon',

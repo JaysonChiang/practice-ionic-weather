@@ -1,13 +1,18 @@
 angular.module('App')
-    .controller('WeatherController', function ($scope, $http, $stateParams, $ionicActionSheet, $ionicModal, Settings, Locations) {
+    .controller('WeatherController', function ($scope, $http, $stateParams, $ionicActionSheet, $ionicModal, $ionicLoading, Settings, Locations) {
         $scope.params = $stateParams;
         $scope.settings = Settings;
 
+        $ionicLoading.show();
         $http.get('/api/forecast/' + $stateParams.lat + ',' + $stateParams.lng, { params: { units: Settings.units } })
             .then(function (res) {
                 $scope.forecast = res.data;
+                $ionicLoading.hide();
             }, function (err) {
-                console.log(err);
+                $ionicLoading.show({
+                    template: err,
+                    duration: 3000
+                });
             })
 
         //Scroll

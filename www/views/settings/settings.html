@@ -19,7 +19,7 @@
         </ion-list>
 
         <ion-list show-delete="canDelete">
-            <ion-item ng-repeat="location in locations">
+            <ion-item ng-repeat="location in locations" ng-if="!location.current">
                 <ion-delete-button class="ion-minus-circled" ng-click="remove($index)"></ion-delete-button>
                 {{location.city}}
             </ion-item>

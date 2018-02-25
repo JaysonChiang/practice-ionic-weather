@@ -26,6 +26,13 @@ angular.module('App', ['ionic'])
   })
   .controller('LeftMenuController', function ($scope, Locations) {
     $scope.locations = Locations.data;
+
+    $scope.getIcon = function (current) {
+      if (current) {
+        return 'ion-ios-navigate';
+      }
+      return 'ion-ios-location';
+    }
   })
 
   .factory('Settings', function () {
@@ -139,7 +146,7 @@ angular.module('App', ['ionic'])
     }
   })
 
-  .run(function ($ionicPlatform) {
+  .run(function ($ionicPlatform, $http, $state, Locations) {
     $ionicPlatform.ready(function () {
       if (window.cordova && window.cordova.plugins.Keyboard) {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -154,5 +161,35 @@ angular.module('App', ['ionic'])
       if (window.StatusBar) {
         StatusBar.styleDefault();
       }
+
+
+      if ("geolocation" in navigator) {
+
+        navigator.geolocation.getCurrentPosition(function (position) {
+          console.log(position.coords.latitude, position.coords.longitude);
+
+          $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
+            params: { latlng: position.coords.latitude + ',' + position.coords.longitude }
+          })
+            .then(function (res) {
+              //建立一個新的地點到地點列表
+              var location = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+                city: res.data.results[0].formatted_address,
+                current: true
+              };
+              Locations.data.unshift(location);
+              $state.go('weather', location)
+            }
+            );
+
+        }, function (err) {
+          console.log('error', err)
+        });
+      } else {
+        console.log("geolocation IS NOT available");
+      }
+
     });
   })

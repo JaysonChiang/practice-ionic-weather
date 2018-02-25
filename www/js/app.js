@@ -37,16 +37,15 @@ angular.module('App', ['ionic'])
   })
 
   .factory('Locations', function ($ionicPopup) {
+    function store() {
+      localStorage.setItem('locations', angular.toJson(Locations.data));
+    }
+
     var Locations = {
-      data: [{
-        city: 'Chicago, IL, USA',
-        lat: 41.8781136,
-        lng: -87.6297928
-      }],
+      data: [],
 
       //確定地點在結果列表的索引
       getIndex: function (item) {
-        console.log(Locations.data);
         console.log(item);
         var index = -1;
         Locations.data.forEach(function (location, i) {
@@ -76,8 +75,9 @@ angular.module('App', ['ionic'])
           Locations.data.push(item);
           $ionicPopup.alert({
             title: 'Location saved'
-          })
+          });
         }
+        store();
       },
 
       // 如果新增資料，將其移到最頂層或將它增加到最頂層
@@ -89,8 +89,17 @@ angular.module('App', ['ionic'])
         } else {
           Locations.data.unshift(item);
         }
+        store();
       }
     }
+
+    try {
+      var items = angular.fromJson(localStorage.getItem('locations')) || [];
+      Locations.data = items;
+    } catch (e) {
+      Locations.data = []
+    }
+
     return Locations;
   })
 

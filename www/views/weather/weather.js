@@ -10,7 +10,7 @@ angular.module('App')
                 $ionicLoading.hide();
             }, function (err) {
                 $ionicLoading.show({
-                    template: err,
+                    template: err.data,
                     duration: 3000
                 });
             })

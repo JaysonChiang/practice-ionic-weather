@@ -1,33 +1,84 @@
 .scroll-page .icon:before {
-    padding-right: 5px;
+  padding-right: 5px;
+}
+.scroll-page .row + .row {
+  margin-top: 0;
+  padding-top: 5px;
+}
+.scroll-page .row:nth-of-type(odd) {
+  /*background: #fafafa;*/
+}
+.scroll-page .row:nth-of-type(even) {
+  /*background: #f3f3f3;*/
+}
+.scroll-page .wind-icon {
+  display: inline-block;
+}
+.scroll-page.center {
+  text-align: center;
+}
+.scroll-page .primary {
+  margin: 0;
+  font-size: 100px;
+  font-weight: lighter;
+  padding-left: 30px;
+}
+.scroll-page .secondary {
+  margin: -30px;
+  font-size: 150px;
+  font-weight: lighter;
+}
+.scroll-page .tertiary {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 200;
+}
+.scroll-page .tertiary .large {
+  font-size: 22px;
+}
+
+.scroll-page .has-header {
+  position: relative;
+}
+
+.background-img {
+  background-image: url("cssimg/background.jpg");
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+
+.info-zone {
+  background-color: rgba(1, 1, 1, 0.5);
+  width: 90%;
+  margin: 30px auto auto auto;
+  padding: 30px;
+  border-radius: 20px;
+  color: white;
+}
+@media only screen and (min-width:640px){
+  .info-zone {
+    width: 50%;
   }
-  .scroll-page .row + .row {
-    margin-top: 0;
-    padding-top: 5px;
-  }
-  .scroll-page .row:nth-of-type(odd) {
-    background: #fafafa;
-  }
-  .scroll-page .row:nth-of-type(even) {
-    background: #f3f3f3;
-  }
-  .scroll-page .wind-icon {
-    display: inline-block;
-  }
-  .scroll-page.center {
-    text-align: center;
-  }
-  .scroll-page .primary {
-    margin: 0;
-    font-size: 100px;
-    font-weight: lighter;
-    padding-left: 30px;
-  }
-  .scroll-page .secondary {
-    margin: 0;
-    font-size: 150px;
-    font-weight: lighter;
-  }
-  .scroll-page .has-header {
-    position: relative;
-  }
+}
+
+.info-zone,
+.info-zone h2,
+.info-zone h3 {
+  color: white;
+}
+
+.info-zone-current {
+}
+
+.info-zone-forcast {
+}
+
+.info-zone-forcast .today {
+  border: 0.5px solid white;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.info-zone-forcast .icon {
+  font-size: 30px;
+}
